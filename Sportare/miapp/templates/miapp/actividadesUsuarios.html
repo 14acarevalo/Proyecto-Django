@@ -1,0 +1,201 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Usuarios</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{% static 'node_modules/bootstrap/dist/css/bootstrap.min.css' %}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'practica/estilos/style.css' %}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(to bottom, #e6ffee, #b3d9b3);
+            color: #333;
+            margin: 0;
+        }
+
+        h1 {
+            text-align: center;
+            color: #155724;
+            font-size: 2.5em;
+            text-shadow: 2px 2px #d4edda;
+            margin-bottom: 30px;
+        }
+
+        .tabla-usuarios {
+            width: 90%;
+            margin: 0 auto;
+            border-collapse: collapse;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background: linear-gradient(145deg, #496f54, #2f523a);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .tabla-usuarios th {
+            background: #264d38;
+            color: #fff;
+            padding: 15px;
+            text-transform: uppercase;
+            font-size: 1em;
+            letter-spacing: 1px;
+            text-align: center;  /* Añadido para centrar el texto en los encabezados */
+
+        }
+
+        .tabla-usuarios td {
+            padding: 12px;
+            color: #e4f3e9;
+            font-size: 0.9em;
+            text-align: center;
+        }
+
+        .tabla-usuarios tr:nth-child(even) {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .tabla-usuarios tr:hover {
+            background: rgba(255, 255, 255, 0.2);
+            cursor: pointer;
+        }
+
+        .tabla-usuarios a,
+        .tabla-usuarios button {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            background: #007bff;
+            padding: 5px 10px;
+            border-radius: 5px;
+            border: none;
+            transition: 0.3s ease;
+        }
+
+        .tabla-usuarios a:hover,
+        .tabla-usuarios button:hover {
+            background: #0056b3;
+        }
+
+        .tabla-usuarios .btn-eliminar {
+            background: #dc3545;
+        }
+
+        .tabla-usuarios .btn-eliminar:hover {
+            background: #c82333;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg bg-dark w-100" id="mainNav" style="border-bottom: 2px solid #555;">
+            <div class="container-fluid">
+                <img src="{% static 'fotos/Logo_sportare.png' %}" style="width: 50px; height: 50px;" alt="Logo Sportare">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar">
+                    <span class="navbar-toggler-icon navbar-dark"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbar">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a href="{% url 'menu' %}" class="nav-link text-white active">
+                                <i class="bi bi-bookmark-check-fill m-1"></i>Menú
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{% url 'menuUsuariosCoordinador' %}" class="nav-link text-white active">
+                                <i class="bi bi-person-arms-up m-1"></i>Menú Usuarios
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{% url 'logout' %}" class="nav-link text-white">
+                                <i class="bi bi-box-arrow-in-right m-1" id="cerrarSesion"></i>Cerrar Sesión
+                            </a>
+                        </li>
+                    </ul>
+                    <!-- Aquí se muestra el reloj -->
+                    <h3 id="textoAlarma" class="text-white ms-auto bi bi-clock-history me-3">00 : 00 : 00</h3>
+                </div>
+            </div>
+        </nav>
+    </header>
+    
+    <main style="background: linear-gradient(145deg, #d9d9d9, #bfbfbf); padding: 20px; border-radius: 8px;">
+        <br>
+        <table class="tabla-usuarios">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Apellidos</th>
+                    <th>Email</th>
+                    <th>Eventos</th>   
+                </tr>
+            </thead>
+            <tbody>
+                {% for usuario in usuarios %}
+                <tr>
+                    <td>{{ usuario.nombre }}</td>
+                    <td>{{ usuario.apellidos }}</td>
+                    <td>{{ usuario.email }}</td>
+                    <td>
+                        <a href="{% url 'eventos_usuario' user_id=usuario.id %}">Ver eventos</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <br>
+    </main>
+    
+    <footer>
+        <div class="container-fluid bg-dark text-white py-2">
+            <div class="row text-center text-md-left">
+                <div class="col-12 mb-2">
+                    <div class="logo-container mb-2" style="border-bottom: 1px solid white; padding-bottom: 8px;">
+                        <img src="{% static 'fotos/sportare_palabra.png' %}" style="width: 200px; height: 120px;" alt="Logo Sportare">
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-4 mb-2">
+                    <p>Todos los derechos reservados</p>
+                    <p><i class="bi bi-person-arms-up mr-2 fs-6"></i><span>Proyecto Alberto Campanero Arévalo</span></p>
+                    <p><i class="bi bi-laptop mr-2 fs-6"></i><span>2º DAW</span></p>
+                </div>
+
+                <div class="col-12 col-md-4 mb-2">
+                    <p><strong>Información legal</strong></p>
+                    <p>
+                        <a href="https://www.google.com/search?q=condiciones+legales&oq=condiciones+legales+&gs_lcrp=EgZjaHJvbWUyCggAEEUYFhgeGDkyBwgBEAAYgAQyBwgCEAAYgAQyBwgDEAAYgAQyBwgEEAAYgAQyBwgGEAAYgAQyBwgHEAAYgAQyBwgIEAAYgAQyCAgJEAAYFhge0gEIMzg0MWowajmoAgCwAgA&sourceid=chrome&ie=UTF-8" class="btn btn-link text-white">
+                          <i class="bi bi-info mr-2 fs-6"></i>Informacion
+                        </a>
+                      </p>
+                </div>
+
+                <div class="col-12 col-md-4 mb-2">
+                    <p><strong>Condiciones de contratación:</strong></p>
+                    <a href="https://www.google.com/search?q=google&oq=google+&gs_lcrp=EgZjaHJvbWUqBwgAEAAYjwIyBwgAEAAYjwIyBggBEEUYOzIGCAIQRRg8MgYIAxBFGDwyBggEEEUYQTIGCAUQRRhBMgYIBhBFGEEyBggHEEUYPNIBCDExOTBqMGo0qAIAsAIB&sourceid=chrome&ie=UTF-8" class="btn btn-link text-white">
+                      <i class="bi bi-book me-2"></i>Condiciones
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Función para actualizar el reloj cada segundo
+        function actualizarReloj() {
+            const ahora = new Date();
+            const horas = String(ahora.getHours()).padStart(2, '0');
+            const minutos = String(ahora.getMinutes()).padStart(2, '0');
+            const segundos = String(ahora.getSeconds()).padStart(2, '0');
+            document.getElementById("textoAlarma").textContent = `${horas} : ${minutos} : ${segundos}`;
+        }
+
+        // Llamada a la función para que el reloj empiece a funcionar
+        setInterval(actualizarReloj, 1000);
+    </script>
+</body>
+</html>

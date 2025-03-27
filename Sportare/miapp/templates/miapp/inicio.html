@@ -1,0 +1,410 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SportAre - Bienvenido</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&family=Roboto+Slab:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Aquí agregamos correctamente el CSS de Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.js"></script>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap JS (necesario para ciertos componentes como los dropdowns, tooltips, etc.) -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
+
+    <script>
+        // Función para actualizar el reloj
+        function actualizarReloj() {
+            const ahora = new Date();
+            const horas = String(ahora.getHours()).padStart(2, '0');
+            const minutos = String(ahora.getMinutes()).padStart(2, '0');
+            const segundos = String(ahora.getSeconds()).padStart(2, '0');
+            document.getElementById("textoAlarma").textContent = `${horas} : ${minutos} : ${segundos}`;
+        }
+
+        function enviar(event) {
+            event.preventDefault();  
+            let elementoNombre = document.getElementById("nombre").value;
+            alert("Mensaje enviado " + elementoNombre);
+            document.querySelector("form").submit();  
+        }
+        
+
+        // Actualizar el reloj cada segundo
+        setInterval(actualizarReloj, 1000);
+
+        // Iniciar el reloj al cargar la página
+        document.addEventListener("DOMContentLoaded", actualizarReloj);
+    </script>
+
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1, h2, h5 {
+            font-family: 'Roboto Slab', serif;
+        }
+
+        .gradient-bg {
+            background: linear-gradient(to right, #014a01, #04e104);
+            color: white;
+        }
+
+        .card-custom {
+            border: none;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 1rem;
+        }
+
+        .icon {
+            font-size: 3rem;
+            color: #04e104;
+        }
+    </style>
+
+    <style>
+        @keyframes zoomIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.5) translateY(30px);
+            }
+            50% {
+                opacity: 0.7;
+                transform: scale(1.1) translateY(-10px);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+    </style>
+
+    <style>
+        .opinion-box {
+            background-color: rgba(0, 0, 0, 0.6); /* Fondo oscuro semi-transparente */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.7); /* Sombreado negro */
+            transition: all 0.3s ease; /* Efecto suave al pasar el mouse */
+        }
+    
+        .opinion-box:hover {
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.9); /* Sombra más intensa al pasar el mouse */
+            transform: translateY(-5px); /* Levanta el bloque al pasar el mouse */
+        }
+    
+        .opinion-box i {
+            font-size: 2rem;
+            margin-right: 10px;
+        }
+    
+        .opinion-box p {
+            font-size: 1.1rem;
+        }
+
+        .cajon {
+            transition: background-color 0.5s ease, color 0.5s ease;
+        }
+        
+        .cajon.activo {
+            background-color: navy !important;
+            color: white !important;
+        }
+        
+        .cajon.activo h1, 
+        .cajon.activo h2, 
+        .cajon.activo p, 
+        .cajon.activo a {
+            color: white !important;
+        }
+        
+
+    </style>
+    
+</head>
+
+<body>
+
+    <header>
+        <nav class="navbar navbar-expand-lg bg-dark" id="mainNav">
+            <div class="container-fluid">
+                <a href="#" class="navbar-brand text-white" id="palabraSportare"><h1 id="Sportare">SportAre</h1></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar">
+                    <span class="navbar-toggler-icon navbar-dark"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbar">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a href="{% url 'inicio' %}" class="nav-link text-white active"><i class="bi bi-bookmark-check-fill m-1"></i>Inicio</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{% url 'login' %}" class="nav-link text-white"><i class="bi bi-box-arrow-in-right m-1"></i>Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{% url 'insertarUsuario' %}" class="nav-link text-white"><i class="bi bi-arrow-right-square-fill m-1"></i>Registrate</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{% url 'contacto' %}" class="nav-link text-white"><i class="bi bi-phone-fill m-1"></i>Contacto</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{% url 'nosotros' %}" class="nav-link text-white"><i class="bi bi-info-circle-fill m-1"></i>Sobre nosotros</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{% url 'servicio' %}" class="nav-link text-white"><i class="bi bi-info-square-fill m-1"></i>¿Qué te recomendamos?</a>
+                        </li>
+                    </ul>
+                    <!-- Reloj -->
+                    <h3 id="textoAlarma" class="text-white ms-auto">00 : 00 : 00</h3>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+
+        <!-- Primer cajón: Bienvenida -->
+        <section class="gradient-bg text-center py-5 mb-4" style="min-height: 800px; display: flex; align-items: center; justify-content: center;">
+            <div class="container" style="display: flex; align-items: center; justify-content: center; flex-direction: row; gap: 40px;">
+                <!-- Texto -->
+                <div style="flex: 1; text-align: center;">
+                    <h1 class="display-1 fw-bold text-uppercase" style="letter-spacing: 5px; font-size: 5rem; animation: zoomIn 2s ease-out;">
+                        ¡Bienvenido a <span class="fw-bold">SportAre</span>!
+                    </h1>
+                    <p class="lead mb-4" style="font-size: 1.8rem; max-width: 800px; margin: 0 auto; animation: zoomIn 3s ease-out 0.5s;">
+                        Tu plataforma definitiva para gestionar eventos deportivos y culturales con facilidad y estilo. Con SportAre, tus eventos tienen el poder de llegar a nuevos niveles de organización, innovación y éxito.
+                    </p>
+                </div>
+                
+                <!-- Imagen del logo -->
+                <div style="flex: 1;">
+                    <img src="{% static 'fotos/Logo_Sportare.png' %}" alt="Logo SportAre" style="max-width: 100%; height: auto; animation: zoomIn 3s ease-out 0.5s;" id="logoSportare">
+                </div>
+            </div>
+        </section>
+        
+        <!-- Segundo cajón: Confianza -->
+        <section class="container text-center py-5 mb-4" style="min-height: 500px;">
+            <h2 class="display-4 mb-4 text-uppercase" style="font-size: 3rem;">Confían en nosotros</h2>
+            <p class="lead mb-5" style="font-size: 1.5rem;">Con el fin de llegar a los entornos rurales, no dejar a nadie tirado y que la gente de estas zonas pueda acceder a servicios tanto deportivos, como culturales de su entorno, hace <strong>SPORTARE</strong></p>
+            <div class="d-flex justify-content-center gap-4 mt-4 mb-5" style="font-size: 3rem;">
+                <i class="bi bi-basketball icon"></i>
+                <i class="bi bi-music-note-beamed icon"></i>
+                <i class="bi bi-football icon"></i>
+                <i class="bi bi-people icon"></i>
+            </div>
+            <!-- Botón para redirigir a registro.html -->
+            <div class="text-center py-4">
+                <a href={% url 'insertarUsuario' %} class="btn btn-success btn-lg" style="font-size: 1.5rem; padding: 20px 40px;">Registrate Ahora</a>
+            </div>
+        </section>
+        
+        
+
+        <!-- Tercer cajón: Qué puedes hacer -->
+        <section class="container py-5 mb-4">
+            <h2 class="text-center display-4 mb-4">¿Qué puedes hacer con SportAre?</h2>
+            <div class="row text-center">
+                <div class="col-md-6 mb-4">
+                    <div class="card card-custom p-4">
+                        <i class="bi bi-laptop icon mb-3"></i> <!-- Icono de laptop -->
+                        <h5><a href="{% url 'login' %}">Conexión desde cualquier lugar</a></h5>
+                        <p>Accede a tu cuenta desde tu móvil, tablet o PC estés donde estés.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-4">
+                    <div class="card card-custom p-4">
+                        <i class="bi bi-calendar-check icon mb-3"></i> <!-- Icono de calendario -->
+                        <h5><a href="{% url 'nosotros' %}">Gestión de eventos</a></h5>
+                        <p>Organiza tus torneos, clases o actividades de forma profesional. Contacta con nosotros</p>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-4">
+                    <div class="card card-custom p-4">
+                        <i class="bi bi-graph-up icon mb-3"></i> <!-- Icono de gráfico -->
+                        <h5>Seguimiento en tiempo real</h5>
+                        <p>Revisa todas las actividades en las que has participado.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-4">
+                    <div class="card card-custom p-4">
+                        <i class="bi bi-chat-dots icon mb-3"></i> <!-- Icono de chat -->
+                        <h5><a href="{% url 'contacto' %}">Comunicate con nosotros</a></h5>
+                        <p>Comunicate con nosotros.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Cuarto cajón: Opiniones de usuarios -->
+        <section class="gradient-bg text-center py-5 mb-4">
+            <h2 class="display-4 mb-4 text-uppercase">Opiniones de nuestros usuarios</h2>
+            <div class="row container mx-auto">
+                <div class="col-md-4">
+                    <blockquote class="blockquote text-white opinion-box">
+                        <i class="bi bi-chat-right-text"></i>
+                        <p>"SportAre ha cambiado nuestra forma de gestionar eventos. Es intuitiva y eficaz."</p>
+                        <footer class="blockquote-footer text-white">Laura G., Organizadora</footer>
+                    </blockquote>
+                </div>
+                <div class="col-md-4">
+                    <blockquote class="blockquote text-white opinion-box">
+                        <i class="bi bi-chat-right-text-fill"></i>
+                        <p>"Gracias a SportAre hemos triplicado nuestra participación en torneos."</p>
+                        <footer class="blockquote-footer text-white">Carlos P., Coordinador</footer>
+                    </blockquote>
+                </div>
+                <div class="col-md-4">
+                    <blockquote class="blockquote text-white opinion-box">
+                        <i class="bi bi-chat-right-heart-fill"></i>
+                        <p>"Fácil de usar y con muchas opciones. La recomiendo al 100%."</p>
+                        <footer class="blockquote-footer text-white">Ana S., Entrenadora</footer>
+                    </blockquote>
+                </div>
+            </div>
+        </section>
+                
+        <!-- Quinto cajón: Instalaciones -->
+        <section class="container py-5">
+            <h2 class="text-center display-4 mb-4">¿Dónde trabajamos?</h2>
+            <div class="row">
+                <div class="col-md-3 mb-4">
+                    <img src="{% static 'fotos/instalacion.png' %}" style="width: 200px; height: 120px" class="img-fluid rounded" alt="Instalación 1">
+                    <p class="mt-2">Instalación moderna con todo lo necesario.</p>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <img src="{% static 'fotos/camino.jpg' %}" style="width: 200px; height: 120px" class="img-fluid rounded" alt="Instalación 2">
+                    <p class="mt-2">Espacios amplios y multifuncionales.</p>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <img src="{% static 'fotos/casaCultural.jpg' %}" style="width: 200px; height: 120px" class="img-fluid rounded" alt="Instalación 3">
+                    <p class="mt-2">Entorno ideal para eventos culturales.</p>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <img src="{% static 'fotos/tenis.jpg' %}" style="width: 200px; height: 120px"class="img-fluid rounded" alt="Instalación 4">
+                    <p class="mt-2">Perfecto para actividades deportivas.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container-fluid bg-dark text-white py-2">
+            <div class="row text-center text-md-left">
+                <!-- Columna del logo -->
+                <div class="col-12 mb-2">
+                    <div class="logo-container mb-2" style="border-bottom: 1px solid white; padding-bottom: 8px;">
+                        <img src="{% static 'fotos/sportare_palabra.png' %}" style="width: 200px; height: 120px;" alt="Logo Sportare">
+                    </div>
+                </div>
+    
+                <!-- Columna de texto -->
+                <div class="col-12 col-md-4 mb-2">
+                   <p>Todos los derechos reservados</p>
+                   <p id="nombre"><i class="bi bi-person-arms-up mr-2 fs-6"></i><span >Proyecto Alberto Campanero Arévalo</span></p>
+                   <p><i class="bi bi-laptop mr-2 fs-6"></i><span>2º DAW</span></p>
+                </div>
+    
+                <!-- Columna de redes sociales -->
+                <div class="col-12 col-md-4 mb-2">
+                    <p><strong>Encuéntranos en:</strong></p>
+                    <p>
+                        <a href="https://www.instagram.com/" class="btn btn-link text-white">
+                          <i class="bi bi-instagram mr-2 fs-6"></i>Instagram
+                        </a>
+                      </p>
+                      
+                      <p>
+                        <a href="https://www.facebook.com/" class="btn btn-link text-white">
+                            <i class="bi bi-facebook mr-2 fs-6"></i>Facebook
+                        </a>
+                      </p>
+                      
+                    <p><a href="https://www.linkedin.com/" class="btn btn-link text-white">
+                        <i class="bi bi-linkedin mr-2 fs-6"></i>Linkedin</a></p>
+                </div>
+    
+                <!-- Columna de trabajo con nosotros -->
+                <div class="col-12 col-md-4 mb-2">
+                    <p><strong>Trabaja con nosotros</strong></p>
+                    <a href="https://www.infojobs.net/candidate/candidate-login/candidate-login.xhtml?dgv=4094108025750764423" class="btn btn-link text-white">
+                        <i class="bi bi-file-earmark-person mr-2 fs-6"></i><span>Infojobs</span>
+                    </a>
+                    <p><strong>Encuéntranos en:</strong></p>
+                    <a href="https://www.google.es/maps/search/santiago+bernabeu/@40.4526181,-3.6920766,638m/data=!3m2!1e3!4b1?hl=es&entry=ttu&g_ep=EgoyMDI0MTEyNC4xIKXMDSoASAFQAw%3D%3D" class="btn btn-link text-white">
+                        <i class="bi bi-geo-alt-fill mr-2 fs-6"></i><span>Ubicación</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Script de Bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+<script>
+    let boton = document.getElementById("logoSportare")
+    let elementoSportare = document.getElementById('Sportare')
+    function mostrarMensaje(){
+        alert("¿Qué es Sportare? Navega a través de nuestra página, encontrarás la respuesta")
+    }
+    function cambiarColor(){
+        elementoSportare.style.color = 'green'
+    }
+
+    elementoSportare.addEventListener('click', cambiarColor)
+
+    boton.addEventListener('mouseover', mostrarMensaje)
+
+    // Función para cambiar el color de fondo y el color del texto al pasar el ratón
+    // Cambio de color al hacer hover
+    document.querySelectorAll('.cajon-interactivo').forEach(cajon => {
+        cajon.addEventListener('mouseover', function() {
+            cajon.style.backgroundColor = '#001f3d';  // Azul marino
+            cajon.style.color = 'white';  // Texto blanco
+        });
+
+        cajon.addEventListener('mouseout', function() {
+            cajon.style.backgroundColor = '';  // Restaura el color original
+            cajon.style.color = '';  // Restaura el color original del texto
+        });
+    });
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const sections = document.querySelectorAll("section");
+    
+        window.addEventListener("scroll", function () {
+            sections.forEach((section) => {
+                const rect = section.getBoundingClientRect();
+                const isVisible = rect.top < window.innerHeight / 2 && rect.bottom > window.innerHeight / 2;
+    
+                if (isVisible) {
+                    section.style.backgroundColor = "#001f3f"; // Azul marino
+                    section.style.color = "#ffffff"; // Letras en blanco
+                } else {
+                    section.style.backgroundColor = ""; // Vuelve al color original
+                    section.style.color = ""; // Vuelve al color original
+                }
+            });
+        });
+    });
+    
+    
+
+
+
+</script>
+
+</html>

@@ -1,0 +1,131 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro</title>
+    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <script src="../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg bg-dark w-100" id="mainNav" style="border-bottom: 2px solid #555;">
+            <div class="container-fluid">
+                <img src="{% static 'fotos/Logo_sportare.png' %}" style="width: 50px; height: 50px;" alt="Logo Sportare">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar">
+                    <span class="navbar-toggler-icon navbar-dark"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbar">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a href="{% url 'menu' %}" class="nav-link text-white active">
+                                <i class="bi bi-bookmark-check-fill m-1"></i>Menú
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{% url 'menuActividadesCulturalesCoordinador' %}" class="nav-link text-white active">
+                                <i class="bi bi bi-book m-1"></i>Menú actividades culturales
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{% url 'logout' %}" class="nav-link text-white">
+                                <i class="bi bi-box-arrow-in-right m-1" id="cerrarSesion"></i>Cerrar Sesión
+                            </a>
+                        </li>
+                    </ul>
+                    <h3 id="textoAlarma" class="text-white ms-auto bi bi-clock-history me-3">00 : 00 : 00</h3>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main style="background: linear-gradient(145deg, #d9d9d9, #bfbfbf); padding: 20px; border-radius: 8px;">
+        <h1 class="text-center mb-4">
+            Eventos culturales
+        </h1>    
+        <ul class="list-group">
+            {% for evento in eventos %}
+                {% if evento.categoria == 'cultural' %}
+                    <li class="list-group-item d-flex justify-content-between align-items-center mb-3">
+                        <div class="d-flex align-items-center">
+                            <div>
+                                <h3 class="mb-1">{{ evento.id }}. {{ evento.nombre }}</h3>
+                                <h5 class="mb-2"><strong>Descripción:</strong> {{ evento.descripcion }}</h5>
+                                <p class="mb-1"><strong>Dirección:</strong> {{ evento.direccion }}</p>
+                                <p class="mb-1"><strong>Fecha de realización:</strong> {{ evento.fechaRealizacion }}</p>
+                                <p class="mb-1"><strong>Hora del evento:</strong> {{ evento.hora }}</p>
+                                <p class="mb-1"><strong>Tipo de evento:</strong> {{ evento.categoria }}</p>
+
+
+                                <!-- Mostrar la imagen del evento si está disponible -->
+                                {% if evento.imagen %}
+                                    <img src="{{ evento.imagen.url }}" alt="Imagen del evento" style="width: 100px; height: 150px; object-fit: cover; border-radius: 8px;">
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="acciones d-flex justify-content-start">
+                            <a href="{% url 'ver_evento' id=evento.id %}" class="btn btn-secondary bi bi-file-image-fill me-3" id="editarEvento">Mostrar cartel</a>
+                            <a href="{% url 'editarEvento' id=evento.id %}" class="btn btn-primary bi bi-pencil me-3" id="editarEvento">Editar</a>
+                            <a href="{% url 'borrar_evento' id=evento.id %}" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i> Eliminar</a>
+                        </div>
+                    </li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+    </main>
+
+    <footer>
+        <div class="container-fluid bg-dark text-white py-2">
+            <div class="row text-center text-md-left">
+                <div class="col-12 mb-2">
+                    <div class="logo-container mb-2" style="border-bottom: 1px solid white; padding-bottom: 8px;">
+                        <img src="{% static 'fotos/sportare_palabra.png' %}" style="width: 200px; height: 120px;" alt="Logo Sportare">
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-4 mb-2">
+                    <p>Todos los derechos reservados</p>
+                    <p><i class="bi bi-person-arms-up mr-2 fs-6"></i><span>Proyecto Alberto Campanero Arévalo</span></p>
+                    <p><i class="bi bi-laptop mr-2 fs-6"></i><span>2º DAW</span></p>
+                </div>
+
+                <div class="col-12 col-md-4 mb-2">
+                    <p><strong>Información legal</strong></p>
+                    <p>
+                        <a href="https://www.google.com/search?q=condiciones+legales" class="btn btn-link text-white">
+                          <i class="bi bi-info mr-2 fs-6"></i>Informacion
+                        </a>
+                    </p>
+                </div>
+
+                <div class="col-12 col-md-4 mb-2">
+                    <p><strong>Condiciones de contratación:</strong></p>
+                    <a href="https://www.google.com/search?q=google" class="btn btn-link text-white">
+                      <i class="bi bi-book me-2"></i>Condiciones
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script>
+        $(document).ready(function() {
+            function actualizarReloj() {
+                var fecha = new Date();
+                var horas = String(fecha.getHours()).padStart(2, '0');
+                var minutos = String(fecha.getMinutes()).padStart(2, '0');
+                var segundos = String(fecha.getSeconds()).padStart(2, '0');
+                document.getElementById('textoAlarma').textContent = `${horas} : ${minutos} : ${segundos}`;
+            }
+    
+            setInterval(actualizarReloj, 1000);
+        });
+    </script>
+</body>
+</html>
